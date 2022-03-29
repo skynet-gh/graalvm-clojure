@@ -16,8 +16,8 @@
    [io.netty/netty-buffer "4.1.39.Final"]]
 
 
-  :dependencies [[org.clojure/clojure "1.10.2-alpha1"]
-                 [aleph "0.4.7-alpha5"]]
+  :dependencies [[org.clojure/clojure "1.11.0"]
+                 [aleph "0.4.7"]]
   :main simple.main
   :uberjar-name "simple-main.jar"
   :profiles {:uberjar {:aot :all}
@@ -29,7 +29,14 @@
     "native-image" "--report-unsupported-elements-at-runtime" "--no-server" "--no-fallback"
     "-H:+ReportExceptionStackTraces"
     "--initialize-at-build-time"
-    "--initialize-at-run-time=io.netty.channel.epoll.EpollEventArray,io.netty.channel.unix.Errors,io.netty.channel.unix.IovArray,io.netty.channel.unix.Socket,io.netty.channel.epoll.Native,io.netty.channel.epoll.EpollEventLoop,io.netty.util.internal.logging.Log4JLogger"
+    "--initialize-at-run-time=io.netty.channel.epoll.EpollEventArray"
+    "--initialize-at-run-time=io.netty.channel.unix.Errors"
+    "--initialize-at-run-time=io.netty.channel.unix.IovArray"
+    "--initialize-at-run-time=io.netty.channel.unix.Socket"
+    "--initialize-at-run-time=io.netty.channel.epoll.Native"
+    "--initialize-at-run-time=io.netty.channel.epoll.EpollEventLoop"
+    "--initialize-at-run-time=io.netty.util.internal.logging.Log4JLogger"
+    "--initialize-at-run-time=io.netty.channel.unix.Limits"
     "--allow-incomplete-classpath"
     "-jar" "./target/${:uberjar-name:-${:name}-${:version}-standalone.jar}"
     "-H:Name=./target/${:name}"]
